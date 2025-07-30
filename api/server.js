@@ -15,6 +15,25 @@ import connectDB from './db/connect.js';
 
 import cors from 'cors';
 
+const allowedOrigins = [
+  'http://localhost:5173', // for local dev
+  'https://job-tracker-7s7w40psm-yuvraj-singhs-projects-07fb547b.vercel.app', // your Vercel URL
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
+app.options('*', cors());
+
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow specific HTTP methods
@@ -25,7 +44,6 @@ app.use((req, res, next) => {
 
 
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 
 // Routers

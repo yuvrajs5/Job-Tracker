@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/v1': {
-        target: 'http://localhost:4000',
+        // target: 'http://localhost:4000',
+        target: 'https://job-tracker-4cyb.onrender.com/',
         changeOrigin: true,
       },
     },

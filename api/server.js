@@ -15,12 +15,17 @@ import connectDB from './db/connect.js';
 
 import cors from 'cors';
 
-app.use(
-  cors({
-    origin: 'http://localhost:5173', // ✅ Vite dev server
-    credentials: true,               // ✅ Required to accept cookies
-  })
-);
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow specific HTTP methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
+  res.setHeader('Access-Control-Expose-Headers', 'auth'); // Expose the 'auth' header to the client
+  next();
+});
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 
 // Routers
